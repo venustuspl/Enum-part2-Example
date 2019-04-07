@@ -1,0 +1,88 @@
+public class EnumExample {
+
+    public static void main (String[] args){
+
+EnumEx test = new EnumEx();
+String[] userValues = {"tak", "TAK", "OK", "ta", "nie", "niewiem", "NoPe" };
+
+test.simplePrint("==Enter==","==Exit==");
+test.simplePrint("--------","--------");
+for(String enter:userValues){
+    test.simplePrint(enter,test.answerUserString(enter));
+}
+
+    }
+
+
+public static class EnumEx{
+    public static enum Answer{
+        TAK(true),
+        NIE(false),
+        T(true),
+        N(false),
+        YES(true),
+        NO(false),
+        OK(true),
+        SURE(true),
+        NOPE(false);
+
+        private boolean value;
+
+        private Answer(boolean value){
+            this.value=value;
+        }
+        private boolean getValue(){
+            return value;
+        }
+    }
+
+    private void simplePrint(String one, String two){
+        System.out.printf("%15s | %10s\n",one,two);
+    }
+
+
+
+
+
+
+    public String answerUserString(String enter){
+        try{
+            return userAns(enter)?"positive":"negative";
+        }catch (UnknownAnswerException e)
+        {
+            return "nieznana";
+        }
+
+    }
+
+
+
+
+
+
+    public boolean userAns(String enter) throws UnknownAnswerException{
+        for(Answer ans:Answer.values()){
+            if(ans.toString().equalsIgnoreCase(enter))
+                return ans.getValue();
+        }
+        throw new UnknownAnswerException();
+    }
+
+
+    public class UnknownAnswerException extends Exception {
+
+        private static final long serialVersionUID = 1L;
+
+        public UnknownAnswerException() {
+            System.out.println("bad");;
+        }
+
+    }
+
+}
+
+
+
+
+
+}
